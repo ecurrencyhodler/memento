@@ -1,6 +1,6 @@
 # 🕒 Memento - Time-Specific Ordinal Marketplace
 
-A Bitcoin marketplace for time-specific ordinal inscriptions with secure 2-of-3 multisig escrow using PSBTs. This was created for the Pleb.fi Metaprotocol Hackathon.
+A Bitcoin marketplace for time-specific ordinal inscriptions with secure 2-of-3 multisig escrow using PSBTs. This prototype will walk through finding an ordinal at 02/22/2022 at 12 PM and create a multisig with the seller. It was created at the Pleb.fi Metaprotocol Hackathon (https://pleb.fi/miami2025).
 
 ## ✨ Features
 
