@@ -1,0 +1,259 @@
+# 🕒 Memento - Time-Specific Ordinal Marketplace
+
+A Bitcoin marketplace for time-specific ordinal inscriptions with secure 2-of-3 multisig escrow using PSBTs. This was created for the Pleb.fi Metaprotocol Hackathon.
+
+## ✨ Features
+
+- 🎯 **Time-based Search**: Find ordinals by exact date and time
+- 🔐 **Real Bitcoin Multisig**: 2-of-3 escrow with buyer, seller, and platform keys
+- ⚡ **Live Database**: Real listings with SQLite backend
+- 🛡️ **PSBT Integration**: Secure Bitcoin transactions
+- 📱 **Responsive Design**: Works on desktop and mobile
+- 🧪 **Testnet Ready**: Safe testing with Bitcoin testnet
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 16+ installed
+- Git (optional)
+
+### Installation
+
+1. **Download the project files** (or clone if you have Git)
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Open the marketplace**:
+   - Open `index.html` in your browser
+   - Navigate to: http://localhost:3000
+
+### 🎯 Test the Marketplace
+
+1. **Search for listings**: Use date `2022-02-22` and time `12:00:00`
+2. **View real data**: 3 listings will appear from the database
+3. **Test Bitcoin multisig**: Click "Buy Now" and generate demo keys
+4. **See real addresses**: Get actual Bitcoin testnet multisig addresses
+
+## 📁 Project Structure
+
+```
+ordinal-marketplace/
+├── server.js          # Backend API with Bitcoin integration
+├── package.json       # Dependencies and scripts
+├── index.html         # Frontend marketplace interface
+├── .env               # Environment variables
+├── .gitignore         # Git ignore rules
+├── README.md          # This file
+└── marketplace.db     # SQLite database (auto-created)
+```
+
+## 🔧 Configuration
+
+### Environment Variables (.env)
+```bash
+PORT=3000                    # Server port
+NODE_ENV=development         # Environment
+BITCOIN_NETWORK=testnet      # Bitcoin network (testnet/mainnet)
+SITE_MASTER_SEED=abandon...  # Site's master seed (change in production!)
+```
+
+### Switch to Mainnet
+In `server.js`, change:
+```javascript
+const NETWORK = bitcoin.networks.bitcoin; // For mainnet
+```
+
+## 🎮 Usage
+
+### For Buyers
+1. **Search by time**: Enter your target date and time
+2. **Browse listings**: See ordinals near your chosen moment
+3. **Secure purchase**: Use 2-of-3 multisig for safe transactions
+4. **Generate test keys**: Use demo keypairs for testing
+
+### For Sellers
+1. **List ordinals**: Add your time-specific inscriptions
+2. **Set prices**: Choose BTC pricing
+3. **Secure escrow**: Funds protected until transfer complete
+
+### For Developers
+1. **API endpoints**: RESTful API with Bitcoin integration
+2. **Real multisig**: Actual Bitcoin script generation
+3. **Database integration**: Full CRUD operations
+4. **Frontend/backend separation**: Clean architecture
+
+## 🔐 Security Features
+
+- ✅ **2-of-3 Multisig**: Bitcoin-native escrow
+- ✅ **Public key validation**: Secp256k1 cryptography
+- ✅ **PSBT support**: Partially Signed Bitcoin Transactions
+- ✅ **Testnet safety**: No real money risk during development
+- ✅ **Input validation**: SQL injection prevention
+- ✅ **Rate limiting**: API abuse protection
+
+## 🛠️ Development
+
+### Available Scripts
+```bash
+npm start      # Production server
+npm run dev    # Development server with auto-restart
+npm test       # Run tests (when added)
+npm run db:reset  # Reset database
+```
+
+### API Endpoints
+
+#### Search Ordinals
+```http
+POST /api/search
+{
+  "target_date": "2022-02-22",
+  "target_time": "12:00:00"
+}
+```
+
+#### Create Multisig
+```http
+POST /api/purchase/initiate
+{
+  "listing_id": 1,
+  "buyer_pubkey": "03abc123...",
+  "seller_pubkey": "02def456..."
+}
+```
+
+#### Generate Demo Keys
+```http
+POST /api/generate-demo-keypair
+```
+
+#### Validate Public Key
+```http
+POST /api/validate-pubkey
+{
+  "pubkey": "03abc123def456..."
+}
+```
+
+### Database Schema
+
+**Tables:**
+- `sellers` - Seller profiles and ratings
+- `ordinal_listings` - Marketplace listings
+- `multisig_transactions` - Escrow transactions
+- `search_history` - Analytics data
+
+## 🚀 Deployment
+
+### Local Development
+1. Keep `BITCOIN_NETWORK=testnet`
+2. Use demo keys for testing
+3. Monitor console for Bitcoin addresses
+
+### Production Deployment
+1. Set `BITCOIN_NETWORK=bitcoin`
+2. Use secure environment variables
+3. Replace SQLite with PostgreSQL
+4. Add SSL/HTTPS
+5. Implement proper key management
+6. Add monitoring and logging
+
+### Environment Setup
+```bash
+# Production environment variables
+NODE_ENV=production
+BITCOIN_NETWORK=bitcoin
+SITE_MASTER_SEED=your-secure-seed-here
+PORT=3000
+```
+
+## 🔗 Integration
+
+### Rebar Labs API
+- Add your API key to connect real ordinal data
+- Update search endpoints to use Rebar's data
+- Integrate MEV protection features
+
+### Wallet Integration
+- Connect to Bitcoin wallets (Unisat, Xverse, etc.)
+- Import public keys automatically
+- Sign PSBTs with connected wallets
+
+### Payment Processing
+- Monitor multisig addresses for payments
+- Automate fund release on ordinal transfer
+- Add payment confirmations
+
+## 📚 Learn More
+
+### Bitcoin Development
+- [BitcoinJS Documentation](https://github.com/bitcoinjs/bitcoinjs-lib)
+- [BIP 32 - Hierarchical Deterministic Wallets](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
+- [PSBTs - Partially Signed Bitcoin Transactions](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki)
+
+### Ordinals Resources
+- [Ordinals Theory](https://docs.ordinals.com/)
+- [Rebar Labs Documentation](https://docs.rebarlabs.io/)
+- [Bitcoin Ordinals Explorer](https://ordinals.com/)
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**"Backend not connected"**
+- Ensure server is running: `npm run dev`
+- Check port 3000 is available
+- Verify API endpoints are responding
+
+**"Invalid public key"**
+- Use 66-character compressed public keys
+- Generate demo keys for testing
+- Ensure proper hex format
+
+**"Database error"**
+- Delete `marketplace.db` and restart
+- Check file permissions
+- Verify SQLite is installed
+
+**"Multisig creation failed"**
+- Validate both public keys first
+- Check Bitcoin network configuration
+- Ensure bitcoinjs-lib is properly installed
+
+### Debug Mode
+Set `NODE_ENV=development` for verbose logging:
+```bash
+NODE_ENV=development npm run dev
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new features
+4. Ensure Bitcoin integration works on testnet
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - build amazing Bitcoin applications!
+
+## 🙏 Acknowledgments
+
+- **BitcoinJS**: Bitcoin JavaScript library
+- **Rebar Labs**: MEV-aware Bitcoin infrastructure
+- **Ordinals**: Digital artifacts on Bitcoin
+- **Bitcoin Community**: For the amazing ecosystem
+
+---
+
+**Built with ❤️ for the Bitcoin ecosystem**
+
+*Secure, time-based ordinal trading with native Bitcoin technology*
